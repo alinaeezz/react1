@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AppHeader from '../app-header/app-header';
+import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
@@ -23,7 +23,8 @@ const App = () => {
                 <ItemStatusFilter />
             </div>
 
-            <TodoList todos={todoData} />
+            <TodoList todos={todoData}
+                        onDeleted = { (id) => console.log('del', id)}/>
         </div>
     );
 };
