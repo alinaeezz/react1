@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './item-staus-filter.css';
+import './item-status-filter.css';
 
 export default class ItemStatusFilter extends Component {
     buttos = [
