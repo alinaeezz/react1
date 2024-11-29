@@ -1,0 +1,14 @@
+.btn {
+    margin: 5px;
+}
+.btn-info {
+    background-color: #007bff;
+    color: white;
+}
+.btn-outline-secondary {
+    border: 1px solid #6c757d;
+    color: #6c757d;
+}
+.btn-group {
+    display: flex;
+}
