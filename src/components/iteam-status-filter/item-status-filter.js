@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './item-status-filter.css';
 
 export default class ItemStatusFilter extends Component {
-    buttos = [
+    buttons = [
         {name: 'all', label: 'All list'},
         {name: 'active', label: 'Active list'},
         {name: 'done', label: 'Done list'}
