@@ -12,13 +12,19 @@ export default class ItemAddForm extends  Component {
          label: e.target.value
      });
 };
- onSubmit = (e) => {
-     e.preventDefault();
+onSubmit = (e) => {
+    e.preventDefault();
+
+    // Проверка на пустое значение
+    if (this.state.label.trim() === '') {
+        return;  // Ничего не делать, если задача пустая
+    }
+
     this.props.onItemAdded(this.state.label);
     this.setState({
         label: ''
     });
- };
+};
     render() {
         return (
             <form className={ "item-add-form d-flex" }
