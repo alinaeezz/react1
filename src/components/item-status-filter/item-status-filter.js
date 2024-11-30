@@ -1,36 +1,37 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './item-status-filter.css';
 
 export default class ItemStatusFilter extends Component {
+    // Список кнопок фильтров
     buttons = [
-        {name: 'all', label: 'All list'},
-        {name: 'active', label: 'Active list'},
-        {name: 'done', label: 'Done list'}
+        { name: 'all', label: 'All list' }, // Фильтр "все задачи"
+        { name: 'active', label: 'Active list' }, // Фильтр "активные задачи"
+        { name: 'done', label: 'Done list' } // Фильтр "выполненные задачи"
     ];
 
-    render () {
+    render() {
+        const { filter, onFilterChange } = this.props; // Деструктуризация props для текущего фильтра и обработчика изменений
 
-        const { filter, onFilterChange } = this.props;
-
-        const buttons = this.buttons.map(({name, label}) => {
-            const isActive = filter === name;
-            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary';
+        // Создание кнопок на основе массива buttons
+        const buttons = this.buttons.map(({ name, label }) => {
+            const isActive = filter === name; // Проверка, активен ли фильтр
+            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary'; // Выбор стиля кнопки
             return (
-                <button type = "button"
-                        className={`btn ${clazz}`}
-                        key={name}
-                        onClick={() => onFilterChange(name) }>
-                    {label}
+                <button
+                    type="button" // Тип кнопки
+                    className={`btn ${clazz}`} // Динамический класс
+                    key={name} // Уникальный ключ для списка
+                    onClick={() => onFilterChange(name)} // Обработчик нажатия
+                >
+                    {label} {/* Текст кнопки */}
                 </button>
-
             );
         });
 
         return (
-            <div className={"btn-group"}>
-                {buttons}
+            <div className={"btn-group"}> {/* Группа кнопок */}
+                {buttons} {/* Отображение кнопок */}
             </div>
         );
     }
 }
-
