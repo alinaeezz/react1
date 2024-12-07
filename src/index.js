@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'; // Импорт ReactDOM для работы �
 
 import App from './components/app'; // Импорт основного компонента приложения
 
+import './index.css';
+
 // Рендеринг компонента App в элемент с id 'root' в DOM
 ReactDOM.render(
     <App />, 

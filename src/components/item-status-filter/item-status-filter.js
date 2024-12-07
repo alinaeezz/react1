@@ -15,13 +15,19 @@ export default class ItemStatusFilter extends Component {
         // Создание кнопок на основе массива buttons
         const buttons = this.buttons.map(({ name, label }) => {
             const isActive = filter === name; // Проверка, активен ли фильтр
-            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary'; // Выбор стиля кнопки
+            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary'; // Определяем стиль кнопки в зависимости от состояния фильтра
+
             return (
                 <button
                     type="button" // Тип кнопки
-                    className={`btn ${clazz}`} // Динамический класс
+                    className={`btn ${clazz}`} // Применяем динамический стиль
                     key={name} // Уникальный ключ для списка
-                    onClick={() => onFilterChange(name)} // Обработчик нажатия
+                    onClick={() => {
+                        // Проверяем, передан ли обработчик
+                        if (onFilterChange) {
+                            onFilterChange(name);
+                        }
+                    }} 
                 >
                     {label} {/* Текст кнопки */}
                 </button>

@@ -1,14 +1,17 @@
+// Импорт React и стилей CSS
 import React from "react";
 import './app-header.css';
 
-const AppHeader = ({toDo, done}) => {
+// Определяем функциональный компонент AppHeader, который получает свойства через props
+const AppHeader = ({ toDo, done }) => {
     return (
-        <div className={"app-header d-flex"}>
-            <h1>Todo List</h1>
-            <h2>{toDo} more to do, {done} </h2>
+        <div className={"app-header d-flex"}> {/* Основной контейнер с классами для стилей */}
+            <h1>Todo List</h1> {/* Заголовок приложения */}
+            {/* Отображение количества задач: сколько осталось сделать и сколько выполнено */}
+            <h2>{toDo} more to do, {done} </h2> 
         </div>
     );
-
 };
 
+// Экспортируем компонент, чтобы он мог использоваться в других местах приложения
 export default AppHeader;

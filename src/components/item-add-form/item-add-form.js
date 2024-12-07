@@ -17,12 +17,16 @@ export default class ItemAddForm extends Component {
     onSubmit = (e) => {
         e.preventDefault(); // Предотвращение перезагрузки страницы
 
-        // Проверка на пустое значение
+        // Проверка на пустое значение или только пробелы
         if (this.state.label.trim() === '') {
-            return; // Завершить, если поле ввода пустое
+            return; // Завершить, если поле ввода пустое или содержит только пробелы
         }
 
-        this.props.onItemAdded(this.state.label); // Вызов метода из props с текстом задачи
+        // Проверяем, передан ли пропс onItemAdded
+        if (this.props.onItemAdded) {
+            this.props.onItemAdded(this.state.label); // Вызов метода из props с текстом задачи
+        }
+
         this.setState({
             label: '' // Очистка поля ввода после добавления
         });
@@ -38,11 +42,12 @@ export default class ItemAddForm extends Component {
                     type={"text"} // Поле ввода текста
                     className={"form-control"} // CSS классы Bootstrap
                     onChange={this.onLabelChange} // Привязка обработчика изменения текста
-                    placeholder={"What need to be done"} // Подсказка в поле ввода
+                    placeholder={"What needs to be done"} // Подсказка в поле ввода
                     value={this.state.label} // Связывание с состоянием компонента
                 />
                 <button 
                     className={"btn btn-outline-secondary"} // Кнопка для добавления задачи
+                    type="submit" // Указание, что кнопка предназначена для отправки формы
                 >
                     Add Item
                 </button>
