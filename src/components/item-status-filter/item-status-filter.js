@@ -1,42 +1,48 @@
+// Импортируем необходимые модули из React
 import React, { Component } from 'react';
+// Подключаем стили для компонента
 import './item-status-filter.css';
 
+// Объявляем и экспортируем (по умолчанию) класс-компонент ItemStatusFilter
 export default class ItemStatusFilter extends Component {
-    // Список кнопок фильтров
+    // Определяем массив кнопок фильтрации, каждая кнопка имеет уникальное имя и текст
     buttons = [
-        { name: 'all', label: 'All list' }, // Фильтр "все задачи"
-        { name: 'active', label: 'Active list' }, // Фильтр "активные задачи"
-        { name: 'done', label: 'Done list' } // Фильтр "выполненные задачи"
+        { name: 'all', label: 'All list' }, // Кнопка для отображения всех задач
+        { name: 'active', label: 'Active list' }, // Кнопка для отображения активных задач
+        { name: 'done', label: 'Done list' } // Кнопка для отображения выполненных задач
     ];
 
+    // Основной метод классового компонента, отвечающий за отображение
     render() {
-        const { filter, onFilterChange } = this.props; // Деструктуризация props для текущего фильтра и обработчика изменений
+        // Деструктуризация props: получаем текущий фильтр и обработчик изменения фильтра
+        const { filter, onFilterChange } = this.props;
 
-        // Создание кнопок на основе массива buttons
+        // Генерация кнопок на основе массива buttons
         const buttons = this.buttons.map(({ name, label }) => {
-            const isActive = filter === name; // Проверка, активен ли фильтр
-            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary'; // Определяем стиль кнопки в зависимости от состояния фильтра
+            // Определяем, активен ли текущий фильтр (сравниваем с именем кнопки)
+            const isActive = filter === name;
+            // Выбираем класс стиля для кнопки: активная кнопка или неактивная
+            const clazz = isActive ? 'btn-info' : 'btn-outline-secondary';
 
             return (
                 <button
-                    type="button" // Тип кнопки
-                    className={`btn ${clazz}`} // Применяем динамический стиль
-                    key={name} // Уникальный ключ для списка
-                    onClick={() => {
-                        // Проверяем, передан ли обработчик
-                        if (onFilterChange) {
-                            onFilterChange(name);
+                    type="button" // Указываем тип кнопки (обычная кнопка, а не отправка формы)
+                    className={`btn ${clazz}`} // Динамически добавляем стиль на основе состояния фильтра
+                    key={name} // Уникальный ключ, чтобы React корректно отслеживал элементы списка
+                    onClick={() => { // Обработчик клика по кнопке
+                        if (onFilterChange) { // Проверяем, передан ли обработчик через props
+                            onFilterChange(name); // Вызываем обработчик и передаем имя фильтра
                         }
-                    }} 
+                    }}
                 >
-                    {label} {/* Текст кнопки */}
+                    {label} {/* Отображаем текст кнопки */}
                 </button>
             );
         });
 
         return (
-            <div className={"btn-group"}> {/* Группа кнопок */}
-                {buttons} {/* Отображение кнопок */}
+            <div className="btn-group"> {/* Контейнер для группы кнопок */}
+                {buttons} {/* Вставляем сгенерированные кнопки */}
             </div>
         );
     }

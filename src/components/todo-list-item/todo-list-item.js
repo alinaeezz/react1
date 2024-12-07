@@ -1,51 +1,54 @@
 import React, { Component } from 'react';
-import './todo-list-item.css'; // Импорт стилей
+import './todo-list-item.css'; // Импорты стилей для данного компонента
 
-// Компонент для отображения отдельной задачи (TodoListItem)
+// Компонент для отображения одной задачи в списке (TodoListItem)
 export default class TodoListItem extends Component {
     render() {
+        // Деструктуризация свойств из props
         const { 
-            label, // Текст задачи
-            onDeleted, // Функция удаления задачи
-            onToggleImportant, // Функция переключения важности
-            onToggleDone, // Функция переключения выполнения
-            important, // Флаг важности задачи
-            done // Флаг выполнения задачи
-        } = this.props; // Деструктуризация props
+            label,              // Название задачи
+            onDeleted,         // Обработчик для удаления задачи
+            onToggleImportant, // Обработчик для переключения важности задачи
+            onToggleDone,      // Обработчик для переключения статуса выполнения задачи
+            important,         // Флаг, показывающий, важна ли задача
+            done               // Флаг, показывающий, выполнена ли задача
+        } = this.props;
 
-        // Определение классов в зависимости от статуса задачи
-        let classNames = 'todo-list-item'; // Базовый класс
+        // Определяем классы для динамического стилирования задачи
+        let classNames = 'todo-list-item'; // Базовый класс для всех задач
         if (done) {
-            classNames += ' done'; // Класс для задач, которые выполнены
+            classNames += ' done'; // Добавляем класс, если задача выполнена
         }
         if (important) {
-            classNames += ' important'; // Класс для важных задач
+            classNames += ' important'; // Добавляем класс, если задача важная
         }
 
         return (
-            <span className={classNames}> {/* Контейнер задачи с динамическими классами */}
-                {/* Название задачи. Клик по нему переключает статус выполнения */}
+            <span className={classNames}> 
+                {/* Основной контейнер задачи с динамическими классами */}
+                
+                {/* Название задачи */}
                 <span
-                    className="todo-list-item-label" 
-                    onClick={onToggleDone} // Обработчик клика по тексту задачи
+                    className="todo-list-item-label"
+                    onClick={onToggleDone} // Обработчик клика по задаче для переключения статуса выполнения
                 >
-                    {label} {/* Отображение текста задачи */}
+                    {label}
                 </span>
 
-                {/* Кнопка для переключения важности задачи */}
+                {/* Кнопка для переключения статуса важности */}
                 <button 
                     type="button"
-                    className="btn btn-outline-success btn-sm float-right" 
-                    onClick={onToggleImportant} 
+                    className="btn btn-outline-success btn-sm float-right"
+                    onClick={onToggleImportant}
                 >
-                    <i className="fa fa-exclamation" /> {/* Иконка важности */}
+                    <i className="fa fa-exclamation" /> {/* Иконка, представляющая важность */}
                 </button>
 
                 {/* Кнопка для удаления задачи */}
                 <button 
                     type="button"
-                    className="btn btn-outline-danger btn-sm float-right" 
-                    onClick={onDeleted} 
+                    className="btn btn-outline-danger btn-sm float-right"
+                    onClick={onDeleted}
                 >
                     <i className="fa fa-trash-o" /> {/* Иконка удаления */}
                 </button>

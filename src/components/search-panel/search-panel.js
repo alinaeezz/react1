@@ -1,30 +1,36 @@
+// Импорт React и компонента Component
 import React, { Component } from "react";
+
+// Импорт CSS-стилей для компонента
 import './search-panel.css';
 
+// Класс-компонент для строки поиска
 export default class SearchPanel extends Component {
+    // Локальное состояние компонента
     state = {
-        term: '' // Хранение текущего значения строки поиска
+        term: '' // Сохраняет текущий текст, введенный в поле поиска
     };
 
-    // Обработка изменения текста в строке поиска
+    // Обработчик события изменения текста в поле ввода
     onSearchChange = (e) => {
-        const term = e.target.value; // Получение значения из поля ввода
-        this.setState({ term }); // Обновление локального состояния
+        const term = e.target.value; // Получаем текущее значение из поля ввода
+        this.setState({ term }); // Обновляем локальное состояние `term`
 
-        // Проверяем, передан ли обработчик из props, чтобы избежать потенциальных ошибок
+        // Проверяем, есть ли обработчик в props
         if (this.props.onSearchChange) {
-            this.props.onSearchChange(term); // Вызов обработчика из props для обновления фильтрации
+            this.props.onSearchChange(term); // Передаем значение строки поиска в родительский компонент
         }
     };
 
+    // Метод render для отображения интерфейса компонента
     render() {
         return (
             <input 
                 type="text" // Поле ввода текста
-                className={"form-control search-input"} // CSS классы для оформления
-                placeholder={"type to search"} // Подсказка в поле ввода
-                value={this.state.term} // Привязка значения к локальному состоянию
-                onChange={this.onSearchChange} // Привязка обработчика изменения
+                className={"form-control search-input"} // Применяем CSS классы для стилей
+                placeholder={"type to search"} // Подсказка в поле ввода для пользователя
+                value={this.state.term} // Связываем значение поля с состоянием компонента
+                onChange={this.onSearchChange} // Привязываем обработчик изменения текста
             />
         );
     }

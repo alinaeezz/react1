@@ -1,46 +1,49 @@
+// Импорт React и компонента Component
 import React, { Component } from 'react';
 
-// Импорты других компонентов
-import AppHeader from '../app-header';
-import SearchPanel from '../search-panel';
-import TodoList from '../todo-list';
-import ItemStatusFilter from '../item-status-filter';
-import ItemAddForm from "../item-add-form";
+// Импорт других компонентов приложения
+import AppHeader from '../app-header'; // Шапка приложения
+import SearchPanel from '../search-panel'; // Панель поиска
+import TodoList from '../todo-list'; // Список задач
+import ItemStatusFilter from '../item-status-filter'; // Фильтры задач
+import ItemAddForm from "../item-add-form"; // Форма для добавления задач
+
+// Импорт CSS для стилизации
 import './app.css';
 
 // Основной компонент приложения
 export default class App extends Component {
-  // Переменная для генерации уникальных ID
+  // Поле класса для генерации уникальных ID
   maxId = 100;
 
   // Начальное состояние приложения
   state = {
-    todoData: [ // Начальные задачи
+    todoData: [ // Массив начальных задач
       this.createTodoItem('Drink Coffee'),
       this.createTodoItem('Make Awesome App'),
       this.createTodoItem('Have a lunch')
     ],
-    term: '', // Значение поля поиска
-    filter: 'all' // Начальный фильтр по умолчанию
+    term: '', // Текущая строка поиска
+    filter: 'all' // Текущий фильтр задач (все, активные, выполненные)
   };
 
-  // Метод для создания новой задачи
+  // Метод для создания объекта задачи
   createTodoItem(label) {
     return {
-      label, 
-      important: false, 
-      done: false, 
-      id: this.maxId++ // Уникальный ID для каждой новой задачи
+      label, // Текст задачи
+      important: false, // Признак важности задачи
+      done: false, // Признак выполнения задачи
+      id: this.maxId++ // Уникальный идентификатор
     };
   }
 
   // Метод для удаления задачи
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((element) => element.id === id); // Поиск индекса задачи
+      const idx = todoData.findIndex((element) => element.id === id); // Находим индекс задачи
       const newArray = [
-        ...todoData.slice(0, idx), // Удаляем элемент до индекса
-        ...todoData.slice(idx + 1) // Удаляем элемент после индекса
+        ...todoData.slice(0, idx), // Массив без удаляемой задачи (до индекса)
+        ...todoData.slice(idx + 1) // Массив без удаляемой задачи (после индекса)
       ];
       return { todoData: newArray }; // Обновляем состояние
     });
@@ -48,18 +51,18 @@ export default class App extends Component {
 
   // Метод для добавления новой задачи
   addItem = (text) => {
-    const newItem = this.createTodoItem(text);
+    const newItem = this.createTodoItem(text); // Создаем новую задачу
     this.setState(({ todoData }) => {
-      const newArr = [...todoData, newItem]; // Добавляем новый элемент
-      return { todoData: newArr };
+      const newArr = [...todoData, newItem]; // Добавляем задачу в массив
+      return { todoData: newArr }; // Обновляем состояние
     });
   };
 
-  // Метод для переключения свойства задачи (done или important)
+  // Общий метод для переключения свойств задачи
   toggleProperty(arr, id, propName) {
-    const idx = arr.findIndex((element) => element.id === id); // Поиск задачи по ID
-    const oldItem = arr[idx];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Изменяем нужное свойство
+    const idx = arr.findIndex((element) => element.id === id); // Находим индекс задачи
+    const oldItem = arr[idx]; // Исходная задача
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Меняем свойство на противоположное
     return [
       ...arr.slice(0, idx),
       newItem,
@@ -67,65 +70,65 @@ export default class App extends Component {
     ];
   }
 
-  // Переключение статуса задачи на выполненную
+  // Метод для переключения статуса выполнения задачи
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, 'done') };
     });
   };
 
-  // Переключение важности задачи
+  // Метод для переключения важности задачи
   onToggleImportant = (id) => {
     this.setState(({ todoData }) => {
       return { todoData: this.toggleProperty(todoData, id, 'important') };
     });
   };
 
-  // Обновление строки поиска
+  // Метод для обновления строки поиска
   onSearchChange = (term) => {
-    this.setState({ term });
+    this.setState({ term }); // Обновляем состояние
   };
 
-  // Обновление фильтра по состоянию задачи
+  // Метод для обновления фильтра
   onFilterChange = (filter) => {
-    this.setState({ filter });
+    this.setState({ filter }); // Обновляем состояние
   };
 
-  // Поиск задач по тексту
+  // Метод для поиска задач по тексту
   search(items, term) {
     if (term.length === 0) return items; // Если поисковая строка пустая, возвращаем все задачи
-    return items.filter((item) => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1);
+    return items.filter((item) => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1); // Фильтруем задачи
   }
 
-  // Фильтрация задач по состоянию (all, active, done)
+  // Метод для фильтрации задач по состоянию
   filter(items, filter) {
     switch (filter) {
       case 'all':
-        return items;
+        return items; // Возвращаем все задачи
       case 'active':
-        return items.filter((item) => !item.done);
+        return items.filter((item) => !item.done); // Только активные задачи
       case 'done':
-        return items.filter((item) => item.done);
+        return items.filter((item) => item.done); // Только выполненные задачи
       default:
         return items;
     }
   }
 
-  // Метод render отвечает за рендеринг интерфейса
+  // Метод render — отображение интерфейса приложения
   render() {
     const { todoData, term, filter } = this.state;
 
-    // Применяем поиск и фильтрацию к данным
+    // Применяем поиск и фильтрацию к задачам
     const visibleItems = this.filter(this.search(todoData, term), filter);
-    const doneCount = todoData.filter((element) => element.done).length; // Подсчет завершенных задач
-    const todoCount = todoData.length - doneCount; // Подсчет оставшихся задач
+    const doneCount = todoData.filter((element) => element.done).length; // Количество выполненных задач
+    const todoCount = todoData.length - doneCount; // Количество оставшихся задач
 
     return (
       <div className="todo-app">
-        {/* Отображаем шапку приложения с количеством задач */}
+        {/* Шапка приложения с количеством задач */}
         <AppHeader toDo={todoCount} done={doneCount} />
         
-        {/* Панель с поиском и фильтрацией */}
+        {/* Панель поиска и фильтров */}
         <div className="top-panel d-flex">
           <SearchPanel onSearchChange={this.onSearchChange} />
           <ItemStatusFilter filter={filter} onFilterChange={this.onFilterChange} />
@@ -139,7 +142,7 @@ export default class App extends Component {
           onToggleDone={this.onToggleDone} 
         />
         
-        {/* Форма для добавления новой задачи */}
+        {/* Форма добавления задач */}
         <ItemAddForm onItemAdded={this.addItem} />
       </div>
     );

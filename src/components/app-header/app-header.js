@@ -2,8 +2,9 @@
 import React from "react";
 import './app-header.css';
 
-// Определяем функциональный компонент AppHeader, который получает свойства через props
+// Определяем функциональный компонент AppHeader, который получает свойства toDo и done через props
 const AppHeader = ({ toDo, done }) => {
+    // Функциональный компонент возвращает разметку
     return (
         <div className={"app-header d-flex"}> {/* Основной контейнер с классами для стилей */}
             <h1>Todo List</h1> {/* Заголовок приложения */}
